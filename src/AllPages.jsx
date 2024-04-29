@@ -10,12 +10,16 @@ import StudentLogin from "./pages/main/student/StudentLogin.jsx"
 import StudentSignUp from "./pages/main/student/StudentSignUp.jsx"
 import StudentForgotPassword from "./pages/main/student/StudentForgetPassword.jsx"
 import FacultyForgetPasswordPage from "./pages/main/faculty/FacultyForgotPassword.jsx"
+import EmailVerificationLinkForFaculty from "./pages/main/verification/EmailVerificationLinkForFaculty.jsx"
+import VerifyAndSetPasswordForFaculty from "./pages/main/verification/VerifyAndSetPasswordForFaculty.jsx"
 import AdminProfile from "./pages/main/admin/AdminProfile.jsx"
 import ForgotPassword from "./pages/main/password/ForgotPassword.jsx"
 // import ResetPassword from "./pages/main/password/ResetPassword.jsx"
 // import ManageAttendancePage from "./pages/main/faculty/ManageAttendancePage.jsx"
 import StudentDashboard from "./pages/main/student/StudentDashBoard.jsx"
 import StudentsPrivateRoutes from "./pages/main/student/privateRoutes/StudentsPrivateRoutes.jsx"
+import EmailVerificationLinkForStudent from "./pages/main/verification/EmailVerificationLinkForStudent.jsx"
+import VerifyAndSetPasswordForStudent from "./pages/main/verification/VerifyAndSetPasswordForStudent.jsx"
 import EmailVerificationLink from "./pages/main/verification/EmailVerificationLink.jsx"
 import ResetPassword from "./pages/main/verification/ResetPassword.jsx"
 import AdminPrivateRoutes from "./pages/main/admin/privateRoutes/AdminPrivateRoute.jsx"
@@ -37,6 +41,8 @@ export {Navbar,
     StudentLogin,
     StudentSignUp,
     StudentForgotPassword,
+    EmailVerificationLinkForStudent,
+    VerifyAndSetPasswordForStudent,
     FacultyForgetPasswordPage,
     AdminProfile,
     ForgotPassword,
@@ -44,6 +50,8 @@ export {Navbar,
     // ManageAttendancePage,
     StudentDashboard,
     FacultyDashBoard,
+    EmailVerificationLinkForFaculty,
+    VerifyAndSetPasswordForFaculty,
     StudentsPrivateRoutes,
     EmailVerificationLink,
     VerifyAndSetPassword,

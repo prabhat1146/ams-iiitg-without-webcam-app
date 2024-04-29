@@ -2,8 +2,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {  Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
-import {Error,Home,Layout, AdminLogin, FacultyLogin, StudentLogin, StudentSignUp,FacultyForgetPasswordPage,StudentForgotPassword,ForgotPassword,ResetPassword, FacultyDashBoard, VerifyEmail, ChangePasswordForAdmin, AdminPasswordResetLink} from './AllPages';
+import {Error,Home,Layout, AdminLogin, FacultyLogin, StudentLogin, StudentSignUp,FacultyForgetPasswordPage,StudentForgotPassword,ForgotPassword,ResetPassword, FacultyDashBoard, VerifyEmail, ChangePasswordForAdmin} from './AllPages';
 import {AdminProfile,StudentDashboard,StudentsPrivateRoutes,AdminPrivateRoutes, EmailVerificationLink,VerifyAndSetPassword,AdminSignUp} from './AllPages';
+import {AdminPasswordResetLink, EmailVerificationLinkForFaculty, VerifyAndSetPasswordForFaculty, EmailVerificationLinkForStudent, VerifyAndSetPasswordForStudent} from './AllPages';
 import FacultyPrivateRoutes from './pages/main/faculty/facultyPrivateRoutes/FacultyPrivateRoutes';
 
 const router=createBrowserRouter(
@@ -34,6 +35,8 @@ const router=createBrowserRouter(
          <Route path='student/forgot-password' element={<StudentForgotPassword/>}></Route>
          <Route path='student/reset-password' element={<ResetPassword/>}></Route>
          <Route path='student/verification/verifyEmailpAndSetPassword' element={<VerifyEmail/>}></Route>
+         <Route path='verification/send-email-verification-link-for-student' element={<EmailVerificationLinkForStudent/>}></Route>
+         <Route path='verification/verify-and-set-password-for-student' element={<VerifyAndSetPasswordForStudent/>}></Route>
          <Route path='faculty/login' element={<FacultyLogin/>}></Route>
          {/* <Route path='faculty/login' element={<FacultyManagement/>}></Route> */}
          <Route path='faculty' element={<FacultyPrivateRoutes/>}>
@@ -41,6 +44,8 @@ const router=createBrowserRouter(
          </Route>
          <Route path='faculty/forgot-password' element={<FacultyForgetPasswordPage/>}></Route>
          <Route path='faculty/reset-password' element={<ResetPassword/>}></Route>
+         <Route path='verification/send-email-verification-link-for-faculty' element={<EmailVerificationLinkForFaculty/>}></Route>
+         <Route path='verification/verify-and-set-password-for-faculty' element={<VerifyAndSetPasswordForFaculty/>}></Route>
          <Route path='faculty/verification/verifyEmailpAndSetPassword' element={<VerifyEmail/>}></Route>
          <Route path='/error' element={<Error/>}></Route>
          <Route path='*' element={<Error/>}></Route>

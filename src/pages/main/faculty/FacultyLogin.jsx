@@ -15,6 +15,8 @@ const FacultyLogin = () => {
   const BASEURL = process.env.REACT_APP_BASEURL
   const handleLogin = () => {
     // Add your authentication logic here
+    setAlert()
+    setError()
     const email = `email=${userEmail}`
     const pass = `password=${password}`
     const dep = `department=${department}`
@@ -61,11 +63,14 @@ const FacultyLogin = () => {
   };
 
   const handleNotHaveAnAccount = () => {
+    setError()
     setAlert('Contact Admin/Administrator')
   }
 
   const handleEmailVerification = () => {
     // setAlert('already verified')
+    setAlert()
+    setError()
     const email = `email=${userEmail}`
     if (userEmail) {
       setIsLoading(true);
@@ -76,13 +81,13 @@ const FacultyLogin = () => {
           if (res.ok) {
             return res.json()
           } else {
-            return ' '
+            return []
           }
 
         })
         .then((res) => {
           console.log(res)
-          if (res.length > 1) {
+          if (res?.length > 1) {
             setIsLoading(false);
             setAlert('More than one accound found')
             return
@@ -98,7 +103,7 @@ const FacultyLogin = () => {
           } else {
             const name = res[0].name;
             setIsLoading(false);
-            navigate('/verification/emailVerificationLink', { state: { email: userEmail, name: name } });
+            navigate('/verification/send-email-verification-link-for-faculty', { state: { email: userEmail, name: name } });
           }
 
         })
@@ -117,8 +122,8 @@ const FacultyLogin = () => {
     <div className="flex items-center justify-center h-screen bg-gradient-to-r from-blue-500 to-purple-500">
       <div className=" p-8 rounded shadow-md w-96 bg-blue-400 ">
         <h2 className="text-2xl font-bold mb-6 text-white">Faculty Login</h2>
-        <p className='text-red-600'>{alert}</p>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
+        <p className='text-blue-800'>{alert}</p>
+        {error && <p className="text-blue-800 mb-4">{error}</p>}
         <div className="mb-4">
           <label className="block text-white text-sm font-bold mb-2" htmlFor="username">
             Email *

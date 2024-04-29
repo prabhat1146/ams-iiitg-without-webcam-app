@@ -20,10 +20,7 @@ const FacultyForgetPasswordPage = () => {
 
     const handleSubmit = (e) => {
         if(formData.email){
-            // console.log('ver',formData.email,formData.name)
-            // navigate('/verification', { state: { email:email,name:name}});
-            // setIsLoading(false);
-            navigate('/verification/emailVerificationLink', { state: {email:formData.email,name:formData.name}});
+            navigate('/verification/send-email-verification-link-for-faculty', { state: {email:formData.email,name:formData.name}});
           }else{
             // setIsLoading(false);
             navigate('/error')

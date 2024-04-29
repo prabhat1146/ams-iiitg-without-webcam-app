@@ -27,7 +27,7 @@ const ForgotPasswordPage = () => {
     if(formData.email){
      
       setIsLoading(false);
-      navigate('/verification/emailVerificationLink', { state: {email:formData.email,name:formData.name}});
+      navigate('/verification/send-email-verification-link-for-student', { state: {email:formData.email,name:formData.name}});
     }else{
       setIsLoading(false);
       navigate('/error')

@@ -105,7 +105,7 @@ const StudentLogin = () => {
             setIsLoading(false);
             const name = res[0].studentName;
             setError()
-            navigate('/verification/emailVerificationLink', { state: { email: useremail, name: name } });
+            navigate('/verification/send-email-verification-link-for-student', { state: { email: useremail, name: name } });
           }
 
         })
