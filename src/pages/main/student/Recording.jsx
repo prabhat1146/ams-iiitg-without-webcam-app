@@ -70,14 +70,14 @@ const AudioToTextConverter = (props) => {
 
   return (
     <div>
-      <div>
+      {/* <div>
         <h3>Recorded Audio:</h3>
         <p>{audioRecording}</p>
       </div>
       <div>
         <h3>Found Numbers:</h3>
         <p>{foundNumbers}</p>
-      </div>
+      </div> */}
     </div>
   );
 };
