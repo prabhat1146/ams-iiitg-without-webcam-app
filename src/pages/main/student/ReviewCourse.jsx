@@ -339,6 +339,7 @@ const ReviewCourses = (props) => {
               <h2>{course.courseName}( {course.courseID} )</h2>
               <h3>Attendance : </h3>
               <h4>Present : {course.present} </h4>
+              {/* <h4>Penalty : {course.penalty} </h4> */}
               <h4>Total : {course.total}</h4>
               <h4>Present % :  {course.total === 0 ? 0 : Math.round((course.present * 100) / course.total)}% </h4>
               {/* <h2 className="text-lg font-semibold mb-2">{course.courseName} <h1 className={`text-lg font-semibold mb-2 ${(course.total===0?0:course.present*100/course.total)>=75?('text-green-600'):('text-red-600')} `}>Attendance : {course.present}/{course.total} = {course.total===0?0:Math.round((course.present*100)/course.total)}%</h1></h2> */}
