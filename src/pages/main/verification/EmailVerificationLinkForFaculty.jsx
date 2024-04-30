@@ -87,7 +87,7 @@ function EmailVerificationLinkForFaculty() {
             )}
 
             {!isSent && (
-                <div className='h-screen flex p-8 justify-center items-center bg-gradient-to-r from-blue-500 to-purple-500'>
+                <div className='h-screen flex flex-col p-8 justify-center items-center bg-gradient-to-r from-blue-500 to-purple-500'>
                     <div>
                         <p className='text-white'>Sending failed !</p>
 
