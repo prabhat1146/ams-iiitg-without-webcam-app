@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 import {  Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import {Error,Home,Layout, AdminLogin, FacultyLogin, StudentLogin, StudentSignUp,FacultyForgetPasswordPage,StudentForgotPassword,ForgotPassword,ResetPassword, FacultyDashBoard, VerifyEmail, ChangePasswordForAdmin} from './AllPages';
 import {AdminProfile,StudentDashboard,StudentsPrivateRoutes,AdminPrivateRoutes, EmailVerificationLink,VerifyAndSetPassword,AdminSignUp} from './AllPages';
-import {AdminPasswordResetLink, EmailVerificationLinkForFaculty, VerifyAndSetPasswordForFaculty, EmailVerificationLinkForStudent, VerifyAndSetPasswordForStudent} from './AllPages';
+import {AdminPasswordResetLink, EmailVerificationLinkForFaculty, VerifyAndSetPasswordForFaculty, EmailVerificationLinkForStudent, VerifyAndSetPasswordForStudent,EmailVerificationLinkForAdmin, VerifyAndSetPasswordForAdmin} from './AllPages';
 import FacultyPrivateRoutes from './pages/main/faculty/facultyPrivateRoutes/FacultyPrivateRoutes';
 
 const router=createBrowserRouter(
@@ -23,6 +23,8 @@ const router=createBrowserRouter(
          </Route>
          <Route path='admin/profile' element={<AdminProfile/>}></Route>
          <Route path='admin/forgot-password' element={<ForgotPassword/>}></Route>
+         <Route path='admin/verification/send-email-verification-link-for-admin' element={<EmailVerificationLinkForAdmin/>}></Route>
+         <Route path='verification/verify-and-set-password-for-admin' element={<VerifyAndSetPasswordForAdmin/>}></Route>
          <Route path='admin/verification/reset-password' element={<ResetPassword/>}></Route>
          <Route path='admin/verification/change-password' element={<ChangePasswordForAdmin/>}></Route>
          <Route path='admin/verification/admin-password-reset-link' element={<AdminPasswordResetLink/>}></Route>

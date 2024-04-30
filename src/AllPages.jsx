@@ -24,6 +24,8 @@ import EmailVerificationLink from "./pages/main/verification/EmailVerificationLi
 import ResetPassword from "./pages/main/verification/ResetPassword.jsx"
 import AdminPrivateRoutes from "./pages/main/admin/privateRoutes/AdminPrivateRoute.jsx"
 import AdminSignUp from "./pages/main/admin/AdminSignUp.jsx"
+import EmailVerificationLinkForAdmin from "./pages/main/verification/EmailVerificationLinkForAdmin.jsx"
+import VerifyAndSetPasswordForAdmin from "./pages/main/verification/VerifyAndSetPasswordForAdmin.jsx"
 import VerifyEmail from "./pages/main/verification/VerifyEmail.jsx"
 import VerifyAndSetPassword from "./pages/main/verification/VerifyAndSetpassword.jsx"
 import ChangePasswordForAdmin from './pages/main/verification/ChangePasswordForAdmin.jsx'
@@ -57,6 +59,8 @@ export {Navbar,
     VerifyAndSetPassword,
     AdminPrivateRoutes,
     AdminSignUp,
+    EmailVerificationLinkForAdmin,
+    VerifyAndSetPasswordForAdmin,
     VerifyEmail,
     ChangePasswordForAdmin,
     AdminPasswordResetLink

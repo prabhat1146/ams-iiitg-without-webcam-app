@@ -25,7 +25,7 @@ const ForgotPassword = () => {
 
     if(email){
       setIsLoading(false);
-      navigate('/admin/verification/admin-password-reset-link', { state: {email:email,name:email}});
+      navigate('/admin/verification/send-email-verification-link-for-admin', { state: {email:email,name:email}});
     }else{
       setIsLoading(false);
       navigate('/error')

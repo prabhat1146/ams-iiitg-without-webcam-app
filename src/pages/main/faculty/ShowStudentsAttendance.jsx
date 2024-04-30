@@ -260,7 +260,7 @@ const ShowStudentAttendance = ({ isOpen, onClose, email, semester }) => {
                   <td className="border px-4 py-2">{course.penalty}</td>
                   <td className="border px-4 py-2">{course.present}</td>
                   <td className="border px-4 py-2">{course.total}</td>
-                  <td className="border px-4 py-2">{course.total === 0 ? 0 : Math.round((course.present * 100) / course.total)}%</td>
+                  <td className="border px-4 py-2">{course.total === 0 ? 0 : Math.round(((course.present-course.penalty) * 100) / course.total)}%</td>
                 </tr>
               ))}
             </tbody>

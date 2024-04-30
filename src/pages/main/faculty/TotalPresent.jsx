@@ -26,6 +26,9 @@ function TotalPresent(props) {
                             <h1>SR.No : {index+1}</h1>
                             <h1>Roll No : {student.studentRollNo}</h1>
                             <h1>Email : {student.studentEmail}</h1>
+                            {student.studentRecordedNumberInAudioText && 
+                            <h1 className='text-red-600'>Recorded Number : {student.studentRecordedNumberInAudioText}</h1>
+                            }
                             {/* setCount(count++) */}
                         </div>
                         )

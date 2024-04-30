@@ -1,88 +1,85 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { fetchData } from '../admin/SetFormData';
 
-const AudioRecorder = () => {
-    const [mediaRecorder, setMediaRecorder] = useState(null);
-    const [chunks, setChunks] = useState([]);
-    const [audioURL, setAudioURL] = useState('');
-    const [recording, setRecording] = useState(false);
-    const BASEURL = process.env.REACT_APP_BASEURL
-    useEffect(() => {
-        let recorder;
-        if (navigator.mediaDevices.getUserMedia) {
-            const constraints = { audio: true };
-            navigator.mediaDevices.getUserMedia(constraints)
-                .then(stream => {
-                    recorder = new MediaRecorder(stream);
-                    setMediaRecorder(recorder);
-                    recorder.ondataavailable = e => {
-                        setChunks(prevChunks => [...prevChunks, e.data]);
-                    };
-                })
-                .catch(err => {
-                    console.error('The following getUserMedia error occurred:', err);
-                });
-        } else {
-            console.error('getUserMedia not supported on your browser!');
-        }
+const AudioToTextConverter = (props) => {
+  const [audioRecording, setAudioRecording] = useState('');
+  const [foundNumbers, setFoundNumbers] = useState('');
+  const BASEURL = process.env.REACT_APP_BASEURL
+  const url=`${BASEURL}/student/setRecoredAudioTextInAttendanceByCourseID`
 
-        return () => {
-            if (recorder && recorder.state === 'recording') {
-                recorder.stop();
-            }
-        };
-    }, []);
+  useEffect(() => {
+    let recognition = null;
+    if ('webkitSpeechRecognition' in window) {
+      recognition = new window.webkitSpeechRecognition();
+    } else if ('SpeechRecognition' in window) {
+      recognition = new window.SpeechRecognition();
+    }
 
-    useEffect(() => {
-        if (mediaRecorder) {
-            startRecording();
-        }
+    if (recognition) {
+      recognition.lang = 'en-US';
+      recognition.continuous = true;
 
-        return () => {
-            if (mediaRecorder && mediaRecorder.state === 'recording') {
-                stopRecording();
-            }
-        };
-    }, [mediaRecorder]);
+      recognition.onresult = (event) => {
+        const transcript = event.results[event.results.length - 1][0].transcript;
+        setAudioRecording(transcript);
+        findAndPrintNumbers(transcript);
+      };
 
-    const startRecording = () => {
-        if (mediaRecorder) {
-            setChunks([]);
-            mediaRecorder.start();
-            setRecording(true);
-        }
+      recognition.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+      };
+
+      recognition.start();
+    }
+
+    return () => {
+      if (recognition) {
+        recognition.stop();
+      }
     };
+  }, []);
 
-    const stopRecording = () => {
-        if (mediaRecorder && mediaRecorder.state === 'recording') {
-            mediaRecorder.stop();
-            setRecording(false);
-            saveAudio();
-        }
-    };
+  const findAndPrintNumbers = (text) => {
+    const numberRegex = /\b\d+\b/g;
+    const numberMatches = text.match(numberRegex);
+    document.cookie=`audioText=${text};audioNumber=${numberMatches}`
+    document.cookie=`audioNumber=${numberMatches}`
+    if (numberMatches) {
+      const numbersString = numberMatches.join('/');
+      const data={
+        studentEmail:props.email,
+        studentRollNo:props.roll,
+        date:props.date,
+        timeSlot:props.timeSlot,
+        degree:props.degree,
+        audioText:text,
+        audioNumber:numbersString
+      }
+      fetchData(url,data)
+      .then((res)=>{
+          
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
+      setFoundNumbers(numbersString);
+    } else {
+      setFoundNumbers('');
+    }
+  };
 
-    const saveAudio = async () => {
-        if (chunks.length === 0) return;
-
-        const formData = new FormData();
-        formData.append('audio', new Blob(chunks, { type: 'audio/ogg; codecs=opus' }));
-        
-        try {
-            const response = await axios.post(`${BASEURL}/upload`, formData);
-            console.log('Audio saved:', response.data);
-            setAudioURL(response.data.audioURL);
-        } catch (error) {
-            console.error('Error saving audio:', error);
-        }
-    };
-
-    return (
-        <div>
-            <h1>Audio Recorder</h1>
-            {recording && <p>Recording...</p>}
-            {audioURL && <audio controls src={audioURL}></audio>}
-        </div>
-    );
+  return (
+    <div>
+      <div>
+        <h3>Recorded Audio:</h3>
+        <p>{audioRecording}</p>
+      </div>
+      <div>
+        <h3>Found Numbers:</h3>
+        <p>{foundNumbers}</p>
+      </div>
+    </div>
+  );
 };
 
-export default AudioRecorder;
+export default AudioToTextConverter;

@@ -9,7 +9,7 @@ const StudentAttendanceForm = (props) => {
 
 
 
-const [isFullscreen,setIsFullScreen]=useState(false);
+  const [isFullscreen, setIsFullScreen] = useState(false);
   const [selectedCourseID, setSelectedCourseID] = useState('');
   const [selectedCourseName, setSelectedCourseName] = useState('');
   const [studentGroup, setStudentGroup] = useState('');
@@ -63,8 +63,8 @@ const [isFullscreen,setIsFullScreen]=useState(false);
 
 
   useEffect(() => {
-    if(!props.studentData.studentEmail){
-      return ;
+    if (!props.studentData.studentEmail) {
+      return;
     }
     const url = `${BASEURL}/student/searchCourses?studentEmail=${props.studentData.studentEmail}`
     fetch(url)
@@ -80,10 +80,10 @@ const [isFullscreen,setIsFullScreen]=useState(false);
       .then((res) => {
         console.log(res)
         if (res?.length > 0) {
-          setCourses(res[res.length-1].courses)
+          setCourses(res[res.length - 1].courses)
         }
       })
-      .catch((error)=>{
+      .catch((error) => {
         console.log(error)
       })
   }, [BASEURL, props.studentData.studentEmail])
@@ -140,7 +140,7 @@ const [isFullscreen,setIsFullScreen]=useState(false);
   };
 
   const handleAttendaceForm = () => {
-    if(!isFullscreen){
+    if (!isFullscreen) {
       setAlert("Full-screen is not enable")
       return
     }
@@ -162,7 +162,7 @@ const [isFullscreen,setIsFullScreen]=useState(false);
         setAlert('Section is not selected !')
         return
       }
-    }else{
+    } else {
       setAlert('Please select mendatory fields')
       return
     }
@@ -188,6 +188,26 @@ const [isFullscreen,setIsFullScreen]=useState(false);
             // console.log(res[0].studentReadyForAttendance)
             setStudentReadyForAttendance(true)
             setAlert('')
+            let audioText=''
+            let audioNumber=''
+            const cookies = document.cookie.split(';');
+
+            // Loop through each cookie to find the one with the specified name
+            for (let cookie of cookies) {
+              // Split the cookie into name and value parts
+              const [cookieName, cookieValue] = cookie.trim().split('=');
+
+              // Check if the current cookie's name matches the desired name
+              if (cookieName === 'audioText') {
+                // Return the value of the cookie
+                audioText=decodeURIComponent(cookieValue);
+              }
+              if (cookieName === 'audioNumber') {
+                // Return the value of the cookie
+                audioNumber=decodeURIComponent(cookieValue);
+              }
+              
+            }
             if (attendanceType === 'ByCourseID') {
               let url = `${BASEURL}/attendance/makeAttendanceBycourseID`
               let data = {
@@ -198,7 +218,9 @@ const [isFullscreen,setIsFullScreen]=useState(false);
                 // department: query.department,
                 degree: query.degree,
                 studentEmail: studentEmail,
-                studentRollNo: studentRollNo
+                studentRollNo: studentRollNo,
+                audioText:audioText,
+                audioNumber:audioNumber
               }
               // console.log(data)
               fetchData(url, data, "", true)
@@ -217,7 +239,9 @@ const [isFullscreen,setIsFullScreen]=useState(false);
                 degree: query.degree,
                 studentEmail: studentEmail,
                 studentRollNo: studentRollNo,
-                studentGroup: studentGroup
+                studentGroup: studentGroup,
+                audioText:audioText,
+                audioNumber:audioNumber
 
               }
 
@@ -238,7 +262,9 @@ const [isFullscreen,setIsFullScreen]=useState(false);
                 degree: query.degree,
                 studentEmail: studentEmail,
                 studentRollNo: studentRollNo,
-                studentSection: studentSection
+                studentSection: studentSection,
+                audioText:audioText,
+                audioNumber:audioNumber
 
               }
 
@@ -268,138 +294,138 @@ const [isFullscreen,setIsFullScreen]=useState(false);
 
   return (
     <div className=' flex flex-col items-center m-4 '>
-      <FullscreenButton fullScreen={setIsFullScreen}/>
-      <Recording/>
-      <h1 className='text-white'>{isFullscreen ? '':'Full screen is not enable'}</h1>
+      <FullscreenButton fullScreen={setIsFullScreen} />
+      <Recording data={{ roll: studentRollNo, email: studentEmail, date: date, timeSlot: timeSlot, degree: query.studentDegree }} />
+      <h1 className='text-white'>{isFullscreen ? '' : 'Full screen is not enable'}</h1>
       {isFullscreen && <>
-      <div className="mb-4 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 mx-auto">
-        <h2 className='text-white '>Please record your attendance for today's class</h2>
+        <div className="mb-4 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 mx-auto">
+          <h2 className='text-white '>Please record your attendance for today's class</h2>
 
-        <div className="flex flex-wrap mt-4">
-          <div className="flex items-center mb-2 mr-4">
-            <input
-              type="radio"
-              id="byCourseID"
-              value="ByCourseID"
-              checked={attendanceType === "ByCourseID"}
-              onChange={() => handleAttendanceTypeSelect("ByCourseID")}
-              name="selectedAttendanceType"
-            />
-            <label htmlFor="byCourseID" className="ml-2 text-white">By Course ID</label>
-          </div>
+          <div className="flex flex-wrap mt-4">
+            <div className="flex items-center mb-2 mr-4">
+              <input
+                type="radio"
+                id="byCourseID"
+                value="ByCourseID"
+                checked={attendanceType === "ByCourseID"}
+                onChange={() => handleAttendanceTypeSelect("ByCourseID")}
+                name="selectedAttendanceType"
+              />
+              <label htmlFor="byCourseID" className="ml-2 text-white">By Course ID</label>
+            </div>
 
-          <div className="flex items-center mb-2 mr-4">
-            <input
-              type="radio"
-              id="byGroupID"
-              value="ByGroupID"
-              checked={attendanceType === "ByGroupID"}
-              onChange={() => handleAttendanceTypeSelect("ByGroupID")}
-              name="selectedAttendanceType"
-            />
-            <label htmlFor="byGroupID" className="ml-2 text-white">By Group ID</label>
-          </div>
+            <div className="flex items-center mb-2 mr-4">
+              <input
+                type="radio"
+                id="byGroupID"
+                value="ByGroupID"
+                checked={attendanceType === "ByGroupID"}
+                onChange={() => handleAttendanceTypeSelect("ByGroupID")}
+                name="selectedAttendanceType"
+              />
+              <label htmlFor="byGroupID" className="ml-2 text-white">By Group ID</label>
+            </div>
 
-          <div className="flex items-center mb-2 mr-4">
-            <input
-              type="radio"
-              id="bySectionID"
-              value="BySectionID"
-              checked={attendanceType === "BySectionID"}
-              onChange={() => handleAttendanceTypeSelect("BySectionID")}
-              name="selectedAttendanceType"
-            />
-            <label htmlFor="bySectionID" className="ml-2 text-white">By Section ID</label>
+            <div className="flex items-center mb-2 mr-4">
+              <input
+                type="radio"
+                id="bySectionID"
+                value="BySectionID"
+                checked={attendanceType === "BySectionID"}
+                onChange={() => handleAttendanceTypeSelect("BySectionID")}
+                name="selectedAttendanceType"
+              />
+              <label htmlFor="bySectionID" className="ml-2 text-white">By Section ID</label>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="mb-2 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 mx-auto">
-        <label className="block text-sm mb-1 text-white">Select Section *</label>
-        <select
-          name="selectedStudentSection"
-          onChange={(e) => handleSectionSelect(e.target.value)}
-          value={studentSection}
-          disabled={groupSelected}
-          className="p-2 border block w-full"
+        <div className="mb-2 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 mx-auto">
+          <label className="block text-sm mb-1 text-white">Select Section *</label>
+          <select
+            name="selectedStudentSection"
+            onChange={(e) => handleSectionSelect(e.target.value)}
+            value={studentSection}
+            disabled={groupSelected}
+            className="p-2 border block w-full"
+          >
+            <option value="">Select Section</option>
+            <option value="S11">Section S11</option>
+            <option value="S12">Section S12</option>
+            <option value="S13">Section S13</option>
+            <option value="S21">Section S21</option>
+            <option value="S22">Section S22</option>
+            <option value="S23">Section S23</option>
+            <option value="S31">Section S31</option>
+            <option value="S32">Section S32</option>
+            <option value="S33">Section S33</option>
+
+
+          </select>
+        </div>
+        <div className="mb-2 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 mx-auto">
+          <label className="block text-sm mb-1 text-white">Select Group *</label>
+          <select
+            name="selectedStudentGroup"
+            onChange={(e) => handleGroupSelect(e.target.value)}
+            value={studentGroup}
+            disabled={sectionSelected}
+            className="p-2 border block w-full"
+          >
+            <option value="">Select Group</option>
+            <option value="G11">Group G11</option>
+            <option value="G12">Group G12</option>
+            <option value="G13">Group G13</option>
+            <option value="G14">Group G14</option>
+            <option value="CS21">Group CS21</option>
+            <option value="CS22">Group CS22</option>
+            <option value="EC21">Group EC21</option>
+            <option value="EC22">Group EC22</option>
+            <option value="CS31">Group CS31</option>
+            <option value="CS32">Group CS32</option>
+            <option value="EC31">Group EC31</option>
+            <option value="EC32">Group EC32</option>
+
+
+
+          </select>
+        </div>
+        <div className="mb-2 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 mx-auto">
+          <label className="block text-sm mb-1 text-white">Select Course *</label>
+          <select
+            name="selectedCourseId"
+            onChange={(e) => handleCourseSelect(e.target.value)}
+            value={selectedCourseID}
+            className="p-2 border block w-full"
+          >
+            <option value="">Select Course</option>
+            {/* console.log("ty",typeof course) */}
+            {courses?.map((course) => (
+              <option key={course.id} value={course.courseID}>
+                {course.courseName}{` ( ${course.courseID} )`}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="mt-2 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 mx-auto">
+          <label className="block text-sm font-semibold text-white mb-1">Generated OTP *</label>
+          <input
+            type="Number"
+            value={otp}
+            onChange={handleOtp}
+            className="w-full px-3 py-2 border rounded-md bg-gray-100"
+          />
+        </div>
+        <h2 className='text-white mt-2'>{alert}</h2>
+        <button
+          className="bg-blue-500 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 mx-auto hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded focus:outline-none focus:shadow-outline"
+          type="submit"
+          onClick={handleAttendaceForm}
         >
-          <option value="">Select Section</option>
-          <option value="S11">Section S11</option>
-          <option value="S12">Section S12</option>
-          <option value="S13">Section S13</option>
-          <option value="S21">Section S21</option>
-          <option value="S22">Section S22</option>
-          <option value="S23">Section S23</option>
-          <option value="S31">Section S31</option>
-          <option value="S32">Section S32</option>
-          <option value="S33">Section S33</option>
-
-
-        </select>
-      </div>
-      <div className="mb-2 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 mx-auto">
-        <label className="block text-sm mb-1 text-white">Select Group *</label>
-        <select
-          name="selectedStudentGroup"
-          onChange={(e) => handleGroupSelect(e.target.value)}
-          value={studentGroup}
-          disabled={sectionSelected}
-          className="p-2 border block w-full"
-        >
-          <option value="">Select Group</option>
-          <option value="G11">Group G11</option>
-          <option value="G12">Group G12</option>
-          <option value="G13">Group G13</option>
-          <option value="G14">Group G14</option>
-          <option value="CS21">Group CS21</option>
-          <option value="CS22">Group CS22</option>
-          <option value="EC21">Group EC21</option>
-          <option value="EC22">Group EC22</option>
-          <option value="CS31">Group CS31</option>
-          <option value="CS32">Group CS32</option>
-          <option value="EC31">Group EC31</option>
-          <option value="EC32">Group EC32</option>
-
-
-
-        </select>
-      </div>
-      <div className="mb-2 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 mx-auto">
-        <label className="block text-sm mb-1 text-white">Select Course *</label>
-        <select
-          name="selectedCourseId"
-          onChange={(e) => handleCourseSelect(e.target.value)}
-          value={selectedCourseID}
-          className="p-2 border block w-full"
-        >
-          <option value="">Select Course</option>
-          {/* console.log("ty",typeof course) */}
-          {courses?.map((course) => (
-            <option key={course.id} value={course.courseID}>
-              {course.courseName}{` ( ${course.courseID} )`}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="mt-2 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 mx-auto">
-        <label className="block text-sm font-semibold text-white mb-1">Generated OTP *</label>
-        <input
-          type="Number"
-          value={otp}
-          onChange={handleOtp}
-          className="w-full px-3 py-2 border rounded-md bg-gray-100"
-        />
-      </div>
-      <h2 className='text-white mt-2'>{alert}</h2>
-      <button
-        className="bg-blue-500 w-full md:w-1/2 lg:w-1/3 xl:w-1/4 mx-auto hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded focus:outline-none focus:shadow-outline"
-        type="submit"
-        onClick={handleAttendaceForm}
-      >
-        Submit
-      </button>
+          Submit
+        </button>
       </>
-}
+      }
 
     </div>
   );

@@ -159,11 +159,11 @@ const AdminDashboard = () => {
       </div>
 
 
-      <nav className="bg-gray-800 text-white py-2">
+      <nav className="bg-gradient-to-r from-blue-500 to-purple-500 text-white py-2">
         <div className="container mx-auto flex justify-center space-x-6">
           <button
             onClick={() => handleSectionChange('faculty')}
-            className={`hover:bg-gray-700 px-2 py-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 ${selectedSection === 'faculty' ? 'bg-gray-700' : ''
+            className={`hover:bg-blue-700 px-2 py-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 ${selectedSection === 'faculty' ? 'bg-blue-400' : ''
               }`}
           >
             Faculty
@@ -171,7 +171,7 @@ const AdminDashboard = () => {
 
           <button
             onClick={() => handleSectionChange('student')}
-            className={`hover:bg-gray-700 px-2 py-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 ${selectedSection === 'student' ? 'bg-gray-700' : ''
+            className={`hover:bg-blue-700 px-2 py-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 ${selectedSection === 'student' ? 'bg-blue-500' : ''
               }`}
           >
             View Students
@@ -179,7 +179,7 @@ const AdminDashboard = () => {
 
           <button
             onClick={() => handleSectionChange('courses')}
-            className={`hover:bg-gray-700 px-2 py-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 ${selectedSection === 'courses' ? 'bg-gray-700' : ''
+            className={`hover:bg-blue-700 px-2 py-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 ${selectedSection === 'courses' ? 'bg-blue-400' : ''
               }`}
           >
             Courses
