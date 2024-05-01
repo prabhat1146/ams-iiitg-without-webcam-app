@@ -24,7 +24,7 @@ function EmailVerificationLinkForFaculty() {
         } else {
             console.log('Props error.');
         }
-    }, []);
+    }, [location,location.state]);
 
     useEffect(() => {
         const BASEURL = process.env.REACT_APP_BASEURL;
@@ -34,6 +34,7 @@ function EmailVerificationLinkForFaculty() {
         if (name && email) {
             try {
                 setIsLoading(true)
+                console.log(name,email)
                 fetchData(url, { name: name, email: email })
                     .then((res) => {
                         // console.log(res)

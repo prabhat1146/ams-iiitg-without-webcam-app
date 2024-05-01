@@ -69,7 +69,8 @@ function EditProfile(props) {
         }
         const url = `${BASEURL}/admin/update-adminid`
         const data = {
-            adminID: adminID,
+            newAdminId: adminID,
+            oldAdminId:props.adminID
            
         }
         setIsLoading(true)
