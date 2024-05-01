@@ -30,6 +30,7 @@ function EditProfile(props) {
     const [adminIDOkButtonText,setAdminIDOkButtonText]=useState('OK');
     const [PhoneOkButtonText,setPhoneOkButtonText]=useState('OK');
     const [genderOkButtonText,setGenderOkButtonText]=useState('OK');
+    const [timer,setTimer]=useState(5)
     const navigate = useNavigate();
 
 
@@ -79,8 +80,19 @@ function EditProfile(props) {
                 console.log(res)
                 if (res) {
                     setIsLoading(false)
-                    setAlert("")
+                    setAlert(`You will logout in next ${timer} seconds`)
                     setAdminIDOkButtonText("Success !")
+                    // setInterval(()=>{
+                    //     setTimer((prev)=>{
+                    //         if(prev>0){
+                    //             return prev-1
+                    //         }
+                    //     })
+                    // },1000)
+                    setTimeout(()=>{
+                        navigate('/admin/login')
+                    },5000)
+                    
                 } else {
                     setIsLoading(false)
                     setAlert("Failed !")

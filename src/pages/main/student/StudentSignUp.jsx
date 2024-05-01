@@ -98,7 +98,7 @@ const StudentSignUp = () => {
           // console.log('ver')
           // navigate('/verification', { state: { email:email,name:name}});
           setIsLoading(false)
-          navigate('/verification/emailVerificationLink', { state: { email: email, name: name } });
+          navigate('/verification/send-email-verification-link-for-student', { state: { email: email, name: name } });
         } else {
           setIsLoading(false)
           navigate('/error')

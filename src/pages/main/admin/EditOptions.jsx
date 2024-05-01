@@ -10,6 +10,7 @@ import UploadCourses from './UploadCourses'
 import UploadAllFaculty from './UploadAllFaculty';
 import ReviewAttendance from '../faculty/ReviewAttendance';
 import ViewStudentsAttendance from './ViewStudentsAttendance'
+import ReactLoading from 'react-loading'
 
 
 const EditOptions = ({ section }) => {
@@ -31,6 +32,8 @@ const EditOptions = ({ section }) => {
   const [semesterValue, setSemesterValue] = useState(1);
   const [viewAllStudents, setViewAllStudents] = useState(false);
   const [allStudents, setAllStudents] = useState(false);
+  const [isLoading,setIsLoading]=useState(false)
+  
   // const [selectedCourses, setSelectedCourses] = useState([]);
   // const [allCourses, setAllCourses] = useState(
   //   [
@@ -140,7 +143,18 @@ const EditOptions = ({ section }) => {
     e.preventDefault();
     const url = `${BASEURL}/faculty/add`;
     try {
-      fetchData(url, facultyData, "Faculty Added success !", true);
+      setIsLoading(true)
+      fetchData(url, facultyData, "Faculty Added success !", true)
+      .then((res)=>{
+        if(!res){
+          alert("Faculty Email already exist")
+        }
+
+        setIsLoading(false)
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
 
     } catch (error) {
 
@@ -507,6 +521,12 @@ const EditOptions = ({ section }) => {
             </button>
 
           </div>
+
+          <div className='flex fixed top-2/4'>
+          {
+            isLoading && <ReactLoading type='spin' color='blue' />
+          }
+        </div>
 
           {addFacultyFlag &&
             <div className='mt-8 w-full lg:w-1/2 md:3/4 flex flex-col justify-center items-center'>
