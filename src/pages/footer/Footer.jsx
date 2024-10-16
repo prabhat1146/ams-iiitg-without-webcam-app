@@ -74,7 +74,7 @@ const Footer = () => {
         </p>
         <hr />
       </div>
-      <p className="text-xs mt-3 text-center">The project is under development.</p>
+      {/* <p className="text-xs mt-3 text-center">The project is under development.</p> */}
     </animated.footer>
   );
 };
